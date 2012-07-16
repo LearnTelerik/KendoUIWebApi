@@ -1,0 +1,54 @@
+﻿<div id="grid"></div>
+<script>
+    var remoteDataSource = new kendo.data.DataSource({
+        transport: {
+            read: {
+                url: "http://localhost:8742/api/foo",
+                dataType: "json"
+            },
+            create: {
+                url: "http://localhost:8742/api/foo",
+                dataType: "json",
+                type: "POST"
+            },
+            update: {
+                url: "http://localhost:8742/api/foo",
+                dataType: "json",
+                type: "PUT"
+            },
+            destroy: {
+                url: "http://localhost:8742/api/foo",
+                dataType: "json",
+                type: "DELETE"
+            }
+        },
+        schema: {
+            model: {
+                id: "Id",
+                fields: {
+                    Id: { editable: false, type: "number" },
+                    Name: { validation: { required: true} }
+                }
+            }
+        }
+    });
+    $('#grid').kendoGrid({
+        dataSource: remoteDataSource,
+        height: 500,
+        toolbar: [{name:"create", text: "Create new foo"}],
+        editable: "popup",
+        columns: [
+                {
+                    field: "Id",
+                    title: "Id"
+                },
+                {
+                    field: "Name",
+                    title: "Name"
+                },
+                {
+                    command: ["edit","destroy"]
+                }
+            ]
+    });
+ </script>
